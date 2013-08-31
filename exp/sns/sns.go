@@ -222,6 +222,24 @@ func (sns *SNS) Publish(options *PublishOpt) (resp *PublishResp, err error) {
 	return
 }
 
+type CreatePlatformEndpointResp struct {
+	EndpointArn string `xml:"CreatePlatformEndpointResult>EndpointArn"`
+	ResponseMetadata
+}
+
+// CreatePlatformEndpoint
+//
+// See http://docs.aws.amazon.com/sns/latest/api/API_CreatePlatformEndpoint.html for more details.
+func (sns *SNS) CreatePlatformEndpoint(appArn, token, userData string) (resp *CreatePlatformEndpointResp, err error) {
+	resp = &CreatePlatformEndpointResp{}
+	params := makeParams("CreatePlatformEndpoint")
+	params["PlatformApplicationArn"] = appArn
+	params["Token"] = token
+	params["CustomUserData"] = userData
+	err = sns.query(nil, nil, params, resp)
+	return
+}
+
 type SetTopicAttributesResponse struct {
 	ResponseMetadata
 }

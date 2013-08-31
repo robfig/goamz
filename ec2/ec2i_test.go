@@ -3,10 +3,10 @@ package ec2_test
 import (
 	"crypto/rand"
 	"fmt"
-	"launchpad.net/goamz/aws"
-	"launchpad.net/goamz/ec2"
-	"launchpad.net/goamz/testutil"
-	. "launchpad.net/gocheck"
+	"github.com/robfig/goamz/aws"
+	"github.com/robfig/goamz/ec2"
+	"github.com/robfig/goamz/testutil"
+	. "github.com/robfig/gocheck"
 )
 
 // AmazonServer represents an Amazon EC2 server.

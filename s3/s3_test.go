@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"testing"
 
-	"launchpad.net/goamz/aws"
-	"launchpad.net/goamz/s3"
-	"launchpad.net/goamz/testutil"
-	. "launchpad.net/gocheck"
+	"github.com/robfig/goamz/aws"
+	"github.com/robfig/goamz/s3"
+	"github.com/robfig/goamz/testutil"
+	. "github.com/robfig/gocheck"
 	"time"
 )
 

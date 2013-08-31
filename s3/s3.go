@@ -16,7 +16,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"launchpad.net/goamz/aws"
+	"github.com/robfig/goamz/aws"
 	"log"
 	"net"
 	"net/http"

@@ -4,8 +4,8 @@ import (
 	"encoding/xml"
 	"io"
 	"io/ioutil"
-	"launchpad.net/goamz/s3"
-	. "launchpad.net/gocheck"
+	"github.com/robfig/goamz/s3"
+	. "github.com/robfig/gocheck"
 	"strings"
 )
 

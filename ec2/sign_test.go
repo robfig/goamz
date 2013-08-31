@@ -1,9 +1,9 @@
 package ec2_test
 
 import (
-	"launchpad.net/goamz/aws"
-	"launchpad.net/goamz/ec2"
-	. "launchpad.net/gocheck"
+	"github.com/robfig/goamz/aws"
+	"github.com/robfig/goamz/ec2"
+	. "github.com/robfig/gocheck"
 )
 
 // EC2 ReST authentication docs: http://goo.gl/fQmAN

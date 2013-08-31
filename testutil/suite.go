@@ -2,8 +2,8 @@ package testutil
 
 import (
 	"flag"
-	"launchpad.net/goamz/aws"
-	. "launchpad.net/gocheck"
+	"github.com/robfig/goamz/aws"
+	. "github.com/robfig/gocheck"
 )
 
 // Amazon must be used by all tested packages to determine whether to

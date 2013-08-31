@@ -1,8 +1,8 @@
 package aws_test
 
 import (
-	"launchpad.net/goamz/aws"
-	. "launchpad.net/gocheck"
+	"github.com/robfig/goamz/aws"
+	. "github.com/robfig/gocheck"
 	"os"
 	"strings"
 	"testing"

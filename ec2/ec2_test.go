@@ -1,10 +1,10 @@
 package ec2_test
 
 import (
-	"launchpad.net/goamz/aws"
-	"launchpad.net/goamz/ec2"
-	"launchpad.net/goamz/testutil"
-	. "launchpad.net/gocheck"
+	"github.com/robfig/goamz/aws"
+	"github.com/robfig/goamz/ec2"
+	"github.com/robfig/goamz/testutil"
+	. "github.com/robfig/gocheck"
 	"testing"
 )
 
@@ -676,7 +676,7 @@ func (s *S) TestSignatureWithEndpointPath(c *C) {
 
 	testServer.Response(200, nil, RebootInstancesExample)
 
-	// https://bugs.launchpad.net/goamz/+bug/1022749
+	// https://bugs.github.com/robfig/goamz/+bug/1022749
 	ec2 := ec2.New(s.ec2.Auth, aws.Region{EC2Endpoint: testServer.URL + "/services/Cloud"})
 
 	_, err := ec2.RebootInstances("i-10a64379")

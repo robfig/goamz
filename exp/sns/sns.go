@@ -29,6 +29,7 @@ import (
 	"errors"
 	"launchpad.net/goamz/aws"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 	"strconv"
 	"time"
@@ -182,6 +183,7 @@ type PublishOpt struct {
 	MessageStructure string
 	Subject          string
 	TopicArn         string
+	TargetArn        string
 }
 
 type PublishResp struct {
@@ -210,6 +212,10 @@ func (sns *SNS) Publish(options *PublishOpt) (resp *PublishResp, err error) {
 
 	if options.TopicArn != "" {
 		params["TopicArn"] = options.TopicArn
+	}
+
+	if options.TargetArn != "" {
+		params["TargetArn"] = options.TargetArn
 	}
 
 	err = sns.query(nil, nil, params, resp)
@@ -403,15 +409,16 @@ func (sns *SNS) query(topic *Topic, message *Message, params map[string]string, 
 
 	sign(sns.Auth, "GET", "/", params, u.Host)
 	u.RawQuery = multimap(params).Encode()
+	println("REQ:\n" + u.String())
 	r, err := http.Get(u.String())
 	if err != nil {
 		return err
 	}
 	defer r.Body.Close()
 
-	//dump, _ := http.DumpResponse(r, true)
-	//println("DUMP:\n", string(dump))
-	//return nil
+	dump, _ := httputil.DumpResponse(r, true)
+	println("DUMP:\n", string(dump))
+	// // return nil
 
 	if r.StatusCode != 200 {
 		return buildError(r)

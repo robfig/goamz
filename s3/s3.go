@@ -27,7 +27,7 @@ import (
 	"time"
 )
 
-const debug = false
+const debug = true
 
 // The S3 type encapsulates operations with an S3 region.
 type S3 struct {
@@ -67,8 +67,8 @@ func (s3 *S3) Bucket(name string) *Bucket {
 	return &Bucket{s3, name}
 }
 
-var createBucketConfiguration = `<CreateBucketConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/"> 
-  <LocationConstraint>%s</LocationConstraint> 
+var createBucketConfiguration = `<CreateBucketConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+  <LocationConstraint>%s</LocationConstraint>
 </CreateBucketConfiguration>`
 
 // locationConstraint returns an io.Reader specifying a LocationConstraint if

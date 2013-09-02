@@ -27,6 +27,7 @@ package sns
 import (
 	"encoding/xml"
 	"errors"
+	"github.com/golang/glog"
 	"github.com/robfig/goamz/aws"
 	"net/http"
 	"net/http/httputil"
@@ -427,16 +428,19 @@ func (sns *SNS) query(topic *Topic, message *Message, params map[string]string, 
 
 	sign(sns.Auth, "GET", "/", params, u.Host)
 	u.RawQuery = multimap(params).Encode()
-	println("REQ:\n" + u.String())
+	if glog.V(1) {
+		glog.V(1).Infoln("REQ:\n", u.String())
+	}
 	r, err := http.Get(u.String())
 	if err != nil {
 		return err
 	}
 	defer r.Body.Close()
 
-	dump, _ := httputil.DumpResponse(r, true)
-	println("DUMP:\n", string(dump))
-	// // return nil
+	if glog.V(1) {
+		dump, _ := httputil.DumpResponse(r, true)
+		glog.V(1).Infoln("DUMP:\n", string(dump))
+	}
 
 	if r.StatusCode != 200 {
 		return buildError(r)

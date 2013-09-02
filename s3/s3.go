@@ -14,10 +14,10 @@ import (
 	"bytes"
 	"encoding/xml"
 	"fmt"
+	"github.com/golang/glog"
+	"github.com/robfig/goamz/aws"
 	"io"
 	"io/ioutil"
-	"github.com/robfig/goamz/aws"
-	"log"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -26,8 +26,6 @@ import (
 	"strings"
 	"time"
 )
-
-const debug = true
 
 // The S3 type encapsulates operations with an S3 region.
 type S3 struct {
@@ -443,9 +441,7 @@ func (s3 *S3) prepare(req *request) error {
 // If resp is not nil, the XML data contained in the response
 // body will be unmarshalled on it.
 func (s3 *S3) run(req *request, resp interface{}) (*http.Response, error) {
-	if debug {
-		log.Printf("Running S3 request: %#v", req)
-	}
+	glog.V(1).Infof("Running S3 request: %#v", req)
 
 	u, err := req.url()
 	if err != nil {
@@ -473,9 +469,9 @@ func (s3 *S3) run(req *request, resp interface{}) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	if debug {
+	if glog.V(1) {
 		dump, _ := httputil.DumpResponse(hresp, true)
-		log.Printf("} -> %s\n", dump)
+		glog.V(1).Infof("} -> %s\n", dump)
 	}
 	if hresp.StatusCode != 200 && hresp.StatusCode != 204 {
 		return nil, buildError(hresp)
@@ -502,13 +498,13 @@ func (e *Error) Error() string {
 }
 
 func buildError(r *http.Response) error {
-	if debug {
-		log.Printf("got error (status code %v)", r.StatusCode)
+	if glog.V(1) {
+		glog.V(1).Infof("got error (status code %v)", r.StatusCode)
 		data, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			log.Printf("\tread error: %v", err)
+			glog.V(1).Infof("\tread error: %v", err)
 		} else {
-			log.Printf("\tdata:\n%s\n\n", data)
+			glog.V(1).Infof("\tdata:\n%s\n\n", data)
 		}
 		r.Body = ioutil.NopCloser(bytes.NewBuffer(data))
 	}
@@ -521,9 +517,7 @@ func buildError(r *http.Response) error {
 	if err.Message == "" {
 		err.Message = r.Status
 	}
-	if debug {
-		log.Printf("err: %#v\n", err)
-	}
+	glog.V(1).Infof("err: %#v\n", err)
 	return &err
 }
 

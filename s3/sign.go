@@ -4,8 +4,8 @@ import (
 	"crypto/hmac"
 	"crypto/sha1"
 	"encoding/base64"
+	"github.com/golang/glog"
 	"github.com/robfig/goamz/aws"
-	"log"
 	"sort"
 	"strings"
 )
@@ -105,8 +105,6 @@ func sign(auth aws.Auth, method, canonicalPath string, params, headers map[strin
 	} else {
 		headers["Authorization"] = []string{"AWS " + auth.AccessKey + ":" + string(signature)}
 	}
-	if debug {
-		log.Printf("Signature payload: %q", payload)
-		log.Printf("Signature: %q", signature)
-	}
+	glog.V(1).Infof("Signature payload: %q", payload)
+	glog.V(1).Infof("Signature: %q", signature)
 }

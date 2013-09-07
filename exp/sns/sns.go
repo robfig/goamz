@@ -241,6 +241,21 @@ func (sns *SNS) CreatePlatformEndpoint(appArn, token, userData string) (resp *Cr
 	return
 }
 
+type DeleteEndpointResp struct {
+	ResponseMetadata
+}
+
+// DeleteEndpoint
+//
+// See http://docs.aws.amazon.com/sns/latest/APIReference/API_DeleteEndpoint.html
+func (sns *SNS) DeleteEndpoint(endpointArn string) (resp *DeleteEndpointResp, err error) {
+	resp = &DeleteEndpointResp{}
+	params := makeParams("DeleteEndpoint")
+	params["EndpointArn"] = endpointArn
+	err = sns.query(nil, nil, params, resp)
+	return
+}
+
 type SetTopicAttributesResponse struct {
 	ResponseMetadata
 }

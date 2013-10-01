@@ -431,7 +431,7 @@ func (err *Error) Error() string {
 
 type xmlErrors struct {
 	RequestId string
-	Errors    []Error `xml:"Errors>Error"`
+	Errors    []Error `xml:"Error"`
 }
 
 func (sns *SNS) query(topic *Topic, message *Message, params map[string]string, resp interface{}) error {

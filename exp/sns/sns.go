@@ -256,6 +256,28 @@ func (sns *SNS) DeleteEndpoint(endpointArn string) (resp *DeleteEndpointResp, er
 	return
 }
 
+type SetEndpointAttributesResp struct {
+	ResponseMetadata
+}
+
+// SetEndpointAttributes
+//
+// See http://docs.aws.amazon.com/sns/latest/api/API_SetEndpointAttributes.html for more details.
+// Valid attr keys are "CustomUserData", "Enabled" and "Token"
+func (sns *SNS) SetEndpointAttributes(endpointArn string, attr map[string]string) (resp *SetEndpointAttributesResp, err error) {
+	resp = &SetEndpointAttributesResp{}
+	params := makeParams("SetEndpointAttributes")
+	params["EndpointArn"] = endpointArn
+	i := 1
+	for k, v := range attr {
+		params["Attributes.entry."+strconv.Itoa(i)+".key"] = k
+		params["Attributes.entry."+strconv.Itoa(i)+".value"] = v
+		i = i + 1
+	}
+	err = sns.query(nil, nil, params, resp)
+	return
+}
+
 type SetTopicAttributesResponse struct {
 	ResponseMetadata
 }
